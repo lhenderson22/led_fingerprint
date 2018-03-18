@@ -1,16 +1,32 @@
 # Hardware
 The following hardware was used through the development of this project:
 Raspberry pi
-Arduino Uno connected through USB
+
 ZhianTec ZFM-20 Fingerprinting Sensor
   Specs: http://microcontrollershop.com/product_info.php?products_id=7224
   SetUp: https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
+  
 MAXREFDES117#: HEART-RATE AND PULSE-OXIMETRY MONITOR
   Specs and SetUp: https://www.maximintegrated.com/en/design/reference-design-center/system-board/6300.html
 
   Function Documentation for algorithm.cpp: https://os.mbed.com/teams/Maxim-Integrated/code/RD117_MBED/docs/5273ab1085ab/algorithm_8cpp.html#a62050365673e666cd0d661a3664c26e6
   
-# led_fingerprint
+# Software
+# LED
+Since the documentation for the LED Pulse Oximeter MAXREFDES117# is utilizing an Arduino and this project uses a Raspberry Pi, the LED was connected using Raspberry Pi's I2C interface. Installation instructions for I2C interface is found bleow:
+
+  https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial#i2c-on-pi
+
+The following two resources were used for connecting the LED to the Pi:
+  Instructions: https://forum.dexterindustries.com/t/maxrefdes117-heart-rate-and-pulse-oximetry-monitor/3602/2
+  Raspberry Pi pinouts: https://www.jameco.com/Jameco/workshop/circuitnotes/raspberry-pi-circuit-note.html
+
+After connecting the LED, [i2cdetect -y 1] will detect the address for the LED registers. If multipole deveices are connected, runt he command before and after connecting the LED.
+
+
+# Fingerprinter
+
+# Master
 The led_fingerprint has all of the python files that are needed to perform any operations using the fingerprinting sensor. These .py files are called in the master_run.cpp file. This cpp file was created using a text editor in development with the python interpretor, therefore enabling the running of both cpp and python files. The set up process for developing this file can be found below:
 
   Calling Python from a Cpp File: https://www.coveros.com/calling-python-code-from-c/
