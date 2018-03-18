@@ -8,13 +8,14 @@ ZhianTec ZFM-20 Fingerprinting Sensor
 MAXREFDES117#: HEART-RATE AND PULSE-OXIMETRY MONITOR
   Specs and SetUp: https://www.maximintegrated.com/en/design/reference-design-center/system-board/6300.html
 
-
+  Function Documentation for algorithm.cpp: https://os.mbed.com/teams/Maxim-Integrated/code/RD117_MBED/docs/5273ab1085ab/algorithm_8cpp.html#a62050365673e666cd0d661a3664c26e6
+  
 # led_fingerprint
 The led_fingerprint has all of the python files that are needed to perform any operations using the fingerprinting sensor. These .py files are called in the master_run.cpp file. This cpp file was created using a text editor in development with the python interpretor, therefore enabling the running of both cpp and python files. The set up process for developing this file can be found below:
 
-https://www.coveros.com/calling-python-code-from-c/
-https://stackoverflow.com/questions/16962430/calling-python-script-from-c-and-using-its-output
-https://www.cyberciti.biz/faq/howto-compile-and-run-c-cplusplus-code-in-linux/
+  Calling Python from a Cpp File: https://www.coveros.com/calling-python-code-from-c/
+                                  https://stackoverflow.com/questions/16962430/calling-python-script-from-c-and-using-its-output
+  High Level Description of Python Compiler Functions: https://docs.python.org/2/c-api/veryhigh.html#c.PyCompilerFlags
 
 To run the master cpp file, navigate to the correct directory in your file system and execute the following command:
 
