@@ -21,7 +21,14 @@ The following two resources were used for connecting the LED to the Pi:
   Instructions: https://forum.dexterindustries.com/t/maxrefdes117-heart-rate-and-pulse-oximetry-monitor/3602/2
   Raspberry Pi pinouts: https://www.jameco.com/Jameco/workshop/circuitnotes/raspberry-pi-circuit-note.html
 
-After connecting the LED, [i2cdetect -y 1] will detect the address for the LED registers. If multipole deveices are connected, runt he command before and after connecting the LED.
+Using this documentation the following connections were made:
+MAXREFDES117#     Raspberry Pi (Pin on Pinout Diagram)
+VIN           --> POWER 5V (2)
+SDA           --> SDA1I2C (3)
+SCL           --> SCL1I2C (5)
+INT           --> GROUND (39)
+
+After connecting the LED, [i2cdetect -y 1] will detect the address for the LED registers. If multiple devices are connected, runt he command before and after connecting the LED.
 
 
 # Fingerprinter
