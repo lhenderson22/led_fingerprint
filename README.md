@@ -28,7 +28,13 @@ SDA           --> SDA1I2C (3)
 SCL           --> SCL1I2C (5)
 INT           --> GROUND (39)
 
-After connecting the LED, [i2cdetect -y 1] will detect the address for the LED registers. If multiple devices are connected, runt he command before and after connecting the LED.
+After connecting the LED, [i2cdetect -y 1] will detect the address for the LED registers. If multiple devices are connected, run the command before and after connecting the LED.
+
+The following addressing bit number can be found using the following specifications:
+
+  https://www.totalphase.com/support/articles/200349176-7-bit-8-bit-and-10-bit-I2C-Slave-Addressing
+  
+This will determine the read/write address for the LED. For our example, the LED is located at address 0x57 and is therefore in 7-bit addressing mode.
 
 
 # Fingerprinter
