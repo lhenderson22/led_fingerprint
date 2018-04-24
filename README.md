@@ -4,52 +4,33 @@ Raspberry pi
 
 ZhianTec ZFM-20 Fingerprinting Sensor
   Specs: http://microcontrollershop.com/product_info.php?products_id=7224
-  SetUp: https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
+  
   
 MAXREFDES117#: HEART-RATE AND PULSE-OXIMETRY MONITOR
   Specs and SetUp: https://www.maximintegrated.com/en/design/reference-design-center/system-board/6300.html
 
   Function Documentation for algorithm.cpp: https://os.mbed.com/teams/Maxim-Integrated/code/RD117_MBED/docs/5273ab1085ab/algorithm_8cpp.html#a62050365673e666cd0d661a3664c26e6
   
-# Software
 # LED
-Since the documentation for the LED Pulse Oximeter MAXREFDES117# is utilizing an Arduino and this project uses a Raspberry Pi, the LED was connected using Raspberry Pi's I2C interface. Installation instructions for I2C interface is found bleow:
+Since the documentation for the LED Pulse Oximeter MAXREFDES117# is utilizing an Arduino, the master_run.py utilizes the Pi's serial ports to call and get data from the Arduino.
 
-  https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial#i2c-on-pi
-
-The following two resources were used for connecting the LED to the Pi:
-  Instructions: https://forum.dexterindustries.com/t/maxrefdes117-heart-rate-and-pulse-oximetry-monitor/3602/2
-  Raspberry Pi pinouts: https://www.jameco.com/Jameco/workshop/circuitnotes/raspberry-pi-circuit-note.html
-
-Using this documentation the following connections were made:
-MAXREFDES117#     Raspberry Pi (Pin on Pinout Diagram)
-VIN           --> POWER 5V (2)
-SDA           --> SDA1I2C (3)
-SCL           --> SCL1I2C (5)
-INT           --> GROUND (39)
-
-After connecting the LED, [i2cdetect -y 1] will detect the address for the LED registers. If multiple devices are connected, run the command before and after connecting the LED.
-
-The following addressing bit number can be found using the following specifications:
-
-  https://www.totalphase.com/support/articles/200349176-7-bit-8-bit-and-10-bit-I2C-Slave-Addressing
-  
-This will determine the read/write address for the LED. For our example, the LED is located at address 0x57 and is therefore in 7-bit addressing mode.
-
+Set up can be found in the product documentation
 
 # Fingerprinter
+All of the scripts to execute operations on the fingerprinter can be found in the Fingerprinter folder
+
+SetUp: https://sicherheitskritisch.de/2015/03/fingerprint-sensor-fuer-den-raspberry-pi-und-debian-linux-en/
 
 # Master
-The led_fingerprint has all of the python files that are needed to perform any operations using the fingerprinting sensor. These .py files are called in the master_run.cpp file. This cpp file was created using a text editor in development with the python interpretor, therefore enabling the running of both cpp and python files. The set up process for developing this file can be found below:
+The Fingerprinter has all of the python files that are needed to perform any operations using the fingerprinting sensor. These .py files are called in the master_run.py file.
 
-  Calling Python from a Cpp File: https://www.coveros.com/calling-python-code-from-c/
-                                  https://stackoverflow.com/questions/16962430/calling-python-script-from-c-and-using-its-output
-  High Level Description of Python Compiler Functions: https://docs.python.org/2/c-api/veryhigh.html#c.PyCompilerFlags
+The order of execution is important. In order to make sure the master_run file will be able to access the data outputted from the Arduino, the Arduino code must be run first.
 
-To run the master cpp file, navigate to the correct directory in your file system and execute the following command:
-
-g++ -I/usr/include/python2.7 -lpython2.7 -o exec master_run.cpp
-./exec
+1) Make sure that the you have setup you system for the fingerprinter and LED pulse ox. Setp instructions can be found in the links above
+2) Connect your Arduino Uno to the Pi using a USB port. Connect the pulse ox using specifications above
+3) Open your Arduino IDE. Open the RD117_ARDUINO,ino file from your file directory. If a prompt asks to create another folder, accept. Compile and upload after making sure that your port and board type are correct. 
+\t Note:  to see if your Arduino is connected, run >> lsusb
+4) To run the master py file, navigate to the correct directory in your file system (it should be 2 folders up from the location of your RD117_ARDUINO.ino file) and execute the following command: >>python2 master_run.py
 
 The following option menu will be seen:
 
@@ -61,4 +42,22 @@ I: View the index of currently enrolled fingerprints.
 G: Get image of fingerprint at certain index.
 C: Check Pulse Ox
 
-E, D, V, I and G will execute their respective .py files. C will open the gtkterm.
+E, D, V, I and G will execute their respective .py files. C will open the initialize the LED sensor.
+
+# Errors
+from pyfingerprint.pyfingerprint import PyFingerprint
+ImportError: No module named 'pyfingerprint'
+
+\t Try >> pip install pyfingerprint
+\t If this doesn't work, make sure you are compiling using python2 and not python3
+
+Pulse Ox isn't taking data after I press enter
+\t Something may be off with the python-arduino interpretter. Just CNTRL-C and restart the test or wait until data starts taking
+
+Traceback (most recent call last):
+  File "master_run.py", line 56, in <module>
+    str1,spo,str2, hr1  = output.split(b' ')
+ValueError: need more than 2 values to unpack
+  
+\t CNTRL-C and restart test
+
