@@ -14,7 +14,8 @@ MAXREFDES117#: HEART-RATE AND PULSE-OXIMETRY MONITOR
 # LED
 Since the documentation for the LED Pulse Oximeter MAXREFDES117# is utilizing an Arduino, the master_run.py utilizes the Pi's serial ports to call and get data from the Arduino.
 
-Set up can be found in the product documentation
+Setting up the Pi to interface with the Arduino: http://www.instructables.com/id/Raspberry-Pi-Arduino-Serial-Communication/
+Set up for the sensor can be found in the product documentation
 
 # Fingerprinter
 All of the scripts to execute operations on the fingerprinter can be found in the Fingerprinter folder
